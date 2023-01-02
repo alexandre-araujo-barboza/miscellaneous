@@ -156,7 +156,7 @@
       } 	  
     } elseif (isset($_GET['update'])) {
       // operação de alteração
-	  if ($_GET['update'] == "contact") {
+      if ($_GET['update'] == "contact") {
         // em contatos
         $code_contact = $_GET['code'];
         $sql = "SELECT codigo FROM contatos WHERE codigo = ".$_GET['code'];
@@ -449,7 +449,7 @@
         text-align: center;
         line-height: 50px;
       }
-	    fieldset {
+      fieldset {
         background-color: #eeeeee;
       }
       legend {
@@ -521,7 +521,7 @@
         <fieldset class="mb-3">
           <legend>
             Endereços
-		      </legend>
+          </legend>
           <div class="table-responsive-md">
             <table class="table">
               <tr>
@@ -593,30 +593,30 @@
     <!-- Incluir Endereço -->
     <script>
       function clearCEP() {
-	      document.getElementById('street').value=("");
-	      document.getElementById('district').value=("");
-	      document.getElementById('city').value=("");
-	      document.getElementById('uf').selectedIndex = 0;
+        document.getElementById('street').value=("");
+        document.getElementById('district').value=("");
+        document.getElementById('city').value=("");
+        document.getElementById('uf').selectedIndex = 0;
       }
       function selectUF(compara) {
         let sel = document.getElementById('uf');
         let count = sel.options.length;
         for (i = 0; i < count; i++) {
-	        if (sel.options[i].value == compara) {
-			      sel.selectedIndex = i; 
-			      return;
-		      }
+          if (sel.options[i].value == compara) {
+            sel.selectedIndex = i; 
+            return;
+          }
         }   
       }
       function myCallback(conteudo) {
-	      if (!("erro" in conteudo)) {
-		      document.getElementById('street').value=(conteudo.logradouro);
-		      document.getElementById('district').value=(conteudo.bairro);
-		      document.getElementById('city').value=(conteudo.localidade);
-		      selectUF(conteudo.uf);
-	      } else {
-	   	   	clearCEP();
-	      }
+        if (!("erro" in conteudo)) {
+          document.getElementById('street').value=(conteudo.logradouro);
+          document.getElementById('district').value=(conteudo.bairro);
+          document.getElementById('city').value=(conteudo.localidade);
+          selectUF(conteudo.uf);
+        } else {
+          clearCEP();
+        }
       }
       function findCEP(valor) {
         var cep = valor.replace(/\D/g, '');
@@ -624,21 +624,21 @@
           var validacep = /^[0-9]{8}$/;
           if(validacep.test(cep)) {
             document.getElementById('street').value="...";
-		        document.getElementById('district').value="...";
-		        document.getElementById('city').value="...";
+            document.getElementById('district').value="...";
+            document.getElementById('city').value="...";
             document.getElementById('uf').selectedIndex = 0;
-		        var script = document.createElement('script');
+            var script = document.createElement('script');
             script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=myCallback';
             document.body.appendChild(script);
-		      } else {
-		        clearCEP();
-		      }
+          } else {
+            clearCEP();
+          }
         } else {
           clearCEP();
         }
       }
     </script>
-	  <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center">
       <form style= "width:400px;" action="?update=address&code=<?=$code_address?>&code_contact=<?=$code_contact?>" method="post" enctype="multipart/form-data">
         <h2 class="mb-3 mt-3"><pre><?= isset($_GET['code']) ? 'Alterar' : 'Incluir' ?> Endereço:<span style="color:gray;">&nbsp;#<?=$code_address?></span></pre></h2>
         <div class="mb-3">
