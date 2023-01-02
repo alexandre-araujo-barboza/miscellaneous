@@ -86,13 +86,14 @@
       // operação de exclusão
       if ($_GET['delete'] == "contact") {
         // em contatos
+        $code_contact = $_GET['code'];
         $sql = "DELETE FROM contatos WHERE codigo = ".$_GET['code'];
         if ($connection->query($sql) === TRUE) {
-          $sql = "ALTER TABLE contatos AUTO_INCREMENT = " . (intval($_GET['code']) -1);
-          if ($connection->query($sql) === TRUE) {
-            $code_contact = $_GET['code'];
-          } else {		   
-            $die = "Algo saiu errado: ".mysqli_error($connection);   
+          if (isset($_GET['last']) && $_GET['last'] == 'true') {
+            $sql = "ALTER TABLE contatos AUTO_INCREMENT = " . (intval($_GET['code']) -1);
+            if ($connection->query($sql) === FALSE) {
+              $die = "Algo saiu errado: ".mysqli_error($connection);   
+            }
           }
         } else {
           $die = "Não foi possível remover: ".mysqli_error($connection);
@@ -106,15 +107,16 @@
         } else {
           $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
           if (!empty($row)) {
+            $code_address = $_GET['code'];
             $code_contact = $row['codigo_contato'];
             $sql = "DELETE FROM enderecos WHERE codigo = ".$_GET['code'];
             if ($connection->query($sql) === TRUE) {
-              $sql = "ALTER TABLE enderecos AUTO_INCREMENT = " . (intval($_GET['code']) -1);
-              if ($connection->query($sql) === TRUE) {
-                $code_address = $_GET['code'];
-              } else {		   
-                $die = "Algo saiu errado: ".mysqli_error($connection);   
-              }
+              if (isset($_GET['last']) && $_GET['last'] == 'true') {
+                $sql = "ALTER TABLE enderecos AUTO_INCREMENT = " . (intval($_GET['code']) -1);
+                if ($connection->query($sql) === FALSE) {
+                  $die = "Algo saiu errado: ".mysqli_error($connection);   
+                }
+              }       
             } else {
               $die = "Não foi possível remover: ".mysqli_error($connection);
             }
@@ -132,15 +134,16 @@
         } else {
           $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
           if (!empty($row)) {
+            $code_phone = $_GET['code'];
             $code_contact = $row['codigo_contato'];
             $sql = "DELETE FROM telefones WHERE codigo = ".$_GET['code'];
             if ($connection->query($sql) === TRUE) {
-              $sql = "ALTER TABLE telefones AUTO_INCREMENT = " . (intval($_GET['code']) -1);
-              if ($connection->query($sql) === TRUE) {
-                $code_phone = $_GET['code'];
-              } else {		   
-                $die = "Algo saiu errado: ".mysqli_error($connection);   
-              }
+              if (isset($_GET['last']) && $_GET['last'] == 'true') {
+                $sql = "ALTER TABLE telefones AUTO_INCREMENT = " . (intval($_GET['code']) -1);
+                if ($connection->query($sql) === FALSE) {
+                  $die = "Algo saiu errado: ".mysqli_error($connection);   
+                }
+              }  
             } else {
               $die = "Não foi possível remover: ".mysqli_error($connection);
             }
@@ -505,8 +508,8 @@
     </script>
     <div class="d-flex justify-content-center">
       <form style= "width:400px;" action="?update=contact&code=<?=$code_contact?>" method="post" enctype="multipart/form-data">
-       <h2 class="mb-3 mt-3"><pre><?= isset($_GET['code']) ? 'Alterar' : 'Incluir' ?> Contato:<span style="color:gray;">&nbsp;#<?=$code_contact?></span></pre></h2>
-       <div class="mb-3">
+        <h2 class="mb-3 mt-3"><pre><?= isset($_GET['code']) ? 'Alterar' : 'Incluir' ?> Contato:<span style="color:gray;">&nbsp;#<?=$code_contact?></span></pre></h2>
+        <div class="mb-3">
           <label for="name" class="form-label">Nome</label>
           <input type="text" class="form-control" name="name" id="name" required maxlength="50" value="<?= $name ?>" onchange=setCookieName();>
         </div>
@@ -514,7 +517,7 @@
           <label for="surname" class="form-label">Sobrenome</label>
           <input type="text" class="form-control" name="surname" id="surname" required maxlength="50" value="<?= $surname ?>" onchange=setCookieSurname();>
         </div>
-        <div class="mb-3">
+         <div class="mb-3">
           <label for="email" class="form-label">Endereço de e-mail</label>
           <input type="email" class="form-control" name="email" id="email" required maxlength="80" value="<?= $email ?>" onchange=setCookieEmail();>
         </div>
@@ -583,7 +586,7 @@
           </div>  
         </fieldset>
         <div class="d-flex justify-content-center" style="width:400px;">
-          <button type="button" class="col-md-5 btn btn-secondary" onclick=<?= isset($_GET['code']) ? "window.location.href='" .$_SERVER['PHP_SELF'] . "'" : "window.location.href='?delete=contact&code=" . $code_contact . "'" ?>>Cancelar</button>
+          <button type="button" class="col-md-5 btn btn-secondary" onclick=<?= isset($_GET['code']) ? "window.location.href='" .$_SERVER['PHP_SELF'] . "'" : "window.location.href='?delete=contact&code=" . $code_contact . "&last=true'" ?>>Cancelar</button>
           <div class="col-md-2">&nbsp;&nbsp;</div>
           <button type="submit" class="col-md-5 btn btn-primary">Gravar</button>
         </div>  
@@ -691,7 +694,7 @@
           </div>
         </div>
         <div class="d-flex justify-content-center" style="width:400px;">
-          <button type="button" class="col-md-5 btn btn-secondary" onclick=<?= isset($_GET['code']) ? "window.location.href='" .$_SERVER['PHP_SELF'] . "'" : "window.location.href='?delete=address&code=" . $code_address . "'" ?>>Cancelar</button>
+          <button type="button" class="col-md-5 btn btn-secondary" onclick=<?= isset($_GET['code']) ? "window.location.href='" .$_SERVER['PHP_SELF'] . "'" : "window.location.href='?delete=address&code=" . $code_address . "&last=true'" ?>>Cancelar</button>
           <div class="col-md-2">&nbsp;&nbsp;</div>
           <button type="submit" class="col-md-5 btn btn-primary">Gravar</button>
         </div>  
@@ -719,7 +722,7 @@
           </select>
         </div>
         <div class="d-flex justify-content-center" style="width:400px;">
-          <button type="button" class="col-md-5 btn btn-secondary" onclick=<?= isset($_GET['code']) ? "window.location.href='" .$_SERVER['PHP_SELF'] . "'" : "window.location.href='?delete=phone&code=" . $code_phone . "'" ?>>Cancelar</button>
+          <button type="button" class="col-md-5 btn btn-secondary" onclick=<?= isset($_GET['code']) ? "window.location.href='" .$_SERVER['PHP_SELF'] . "'" : "window.location.href='?delete=phone&code=" . $code_phone . "&last=true'" ?>>Cancelar</button>
           <div class="col-md-2">&nbsp;&nbsp;</div>
           <button type="submit" class="col-md-5 btn btn-primary">Gravar</button>
         </div>  
