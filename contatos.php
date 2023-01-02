@@ -28,13 +28,13 @@
           $die = "Algo saiu errado: ".mysqli_error($connection);   
         }
       }	
-	  } else {
+    } else {
       $die = "Algo saiu errado: ".mysqli_error($connection);
     }
     $sql = "SELECT * FROM enderecos WHERE codigo_contato = " . $code_contact;
     $result = mysqli_query($connection, $sql);
     if (!$result) {
-	    $die = "A consulta SQL falhou: ".mysqli_error($connection);
+      $die = "A consulta SQL falhou: ".mysqli_error($connection);
     } else {
       $rows = array();
       $i = 0;
@@ -51,7 +51,7 @@
       $sql = "SELECT MAX(codigo) AS 'max_codigo' FROM telefones";
       $result = mysqli_query($connection, $sql);
       if (!$result) {
-	      $die = "A consulta SQL falhou: ".mysqli_error($connection);
+        $die = "A consulta SQL falhou: ".mysqli_error($connection);
       } else {
         $rows = mysqli_fetch_array($result, MYSQLI_ASSOC);
         if (empty($rows['max_codigo'])) {
@@ -64,13 +64,13 @@
           $die = "Algo saiu errado: ".mysqli_error($connection);   
         }
       }	
-	  } else {
+    } else {
       $die = "Algo saiu errado: ".mysqli_error($connection);
     }
     $sql = "SELECT * FROM telefones WHERE codigo_contato = " . $code_contact;
     $result = mysqli_query($connection, $sql);
     if (!$result) {
-	    $die = "A consulta SQL falhou: ".mysqli_error($connection);
+      $die = "A consulta SQL falhou: ".mysqli_error($connection);
     } else {
       $rows = array();
       $i = 0;
@@ -128,7 +128,7 @@
         $sql = "SELECT codigo_contato FROM telefones WHERE codigo = ".$_GET['code'];
         $result = mysqli_query($connection, $sql);
         if (!$result) {
-           $die = "A consulta SQL falhou: ".mysqli_error($connection);
+          $die = "A consulta SQL falhou: ".mysqli_error($connection);
         } else {
           $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
           if (!empty($row)) {
@@ -162,7 +162,7 @@
         $sql = "SELECT codigo FROM contatos WHERE codigo = ".$_GET['code'];
         $result = mysqli_query($connection, $sql);
         if (!$result) {
-           $die = "A consulta SQL falhou: ".mysqli_error($connection);
+          $die = "A consulta SQL falhou: ".mysqli_error($connection);
         } else {
           $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
           if (empty($row)) {
@@ -274,7 +274,7 @@
         $sql = "SELECT * FROM enderecos WHERE codigo = ".$_GET['code'] ;
         $result = mysqli_query($connection, $sql);
         if (!$result) {
-           $die = "A consulta SQL falhou: ".mysqli_error($connection);
+          $die = "A consulta SQL falhou: ".mysqli_error($connection);
         } else {
           $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
           if (!empty($row)) {
@@ -298,7 +298,7 @@
         $sql = "SELECT * FROM telefones WHERE codigo = ".$_GET['code'] ;
         $result = mysqli_query($connection, $sql);
         if (!$result) {
-           $die = "A consulta SQL falhou: ".mysqli_error($connection);
+          $die = "A consulta SQL falhou: ".mysqli_error($connection);
         } else {
           $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
           if (!empty($row)) {
@@ -337,7 +337,7 @@
       }
       $rows_phone = getPhoneData($connection, $code_contact, $die);
       $rows_address = getAddressData($connection, $code_contact, $die); 
-   } else {
+    } else {
       if (isset($_GET['code_contact'])) { 		
         $code_contact = $_GET['code_contact'];
         if ($_GET['insert'] == "address") {
@@ -378,7 +378,7 @@
       $sql = "SELECT MAX(codigo) AS 'max_codigo' FROM contatos";
       $result = mysqli_query($connection, $sql);
       if (!$result) {
-	      $die = "A consulta SQL falhou: ".mysqli_error($connection);
+        $die = "A consulta SQL falhou: ".mysqli_error($connection);
       } else {
         $rows = mysqli_fetch_array($result, MYSQLI_ASSOC);
         if (empty($rows['max_codigo'])) {
@@ -391,20 +391,20 @@
           $die = "Algo saiu errado: ".mysqli_error($connection);   
         }
       }	
-	  } else {
+    } else {
       $die = "Algo saiu errado: ".mysqli_error($connection);
     }
     $sql = "SELECT * FROM contatos";
     $result = mysqli_query($connection, $sql);
     if (!$result) {
-	   $die = "A consulta SQL falhou: ".mysqli_error($connection);
+      $die = "A consulta SQL falhou: ".mysqli_error($connection);
     } else {
-       $rows = array();
-       $i = 0;
-       while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-         $rows[$i] = $row;
-         $i++;
-        }
+      $rows = array();
+      $i = 0;
+      while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+        $rows[$i] = $row;
+        $i++;
+      }
     }
   } else {
     header('HTTP/1.0 400 Bad Request');
@@ -502,10 +502,10 @@
         if (!empty($_COOKIE['email'])) 
           $email = $_COOKIE['email'];
       ?>
-  </script>
+    </script>
     <div class="d-flex justify-content-center">
       <form style= "width:400px;" action="?update=contact&code=<?=$code_contact?>" method="post" enctype="multipart/form-data">
-        <h2 class="mb-3 mt-3"><pre><?= isset($_GET['code']) ? 'Alterar' : 'Incluir' ?> Contato:<span style="color:gray;">&nbsp;#<?=$code_contact?></span></pre></h2>
+       <h2 class="mb-3 mt-3"><pre><?= isset($_GET['code']) ? 'Alterar' : 'Incluir' ?> Contato:<span style="color:gray;">&nbsp;#<?=$code_contact?></span></pre></h2>
        <div class="mb-3">
           <label for="name" class="form-label">Nome</label>
           <input type="text" class="form-control" name="name" id="name" required maxlength="50" value="<?= $name ?>" onchange=setCookieName();>
@@ -514,7 +514,7 @@
           <label for="surname" class="form-label">Sobrenome</label>
           <input type="text" class="form-control" name="surname" id="surname" required maxlength="50" value="<?= $surname ?>" onchange=setCookieSurname();>
         </div>
-         <div class="mb-3">
+        <div class="mb-3">
           <label for="email" class="form-label">Endereço de e-mail</label>
           <input type="email" class="form-control" name="email" id="email" required maxlength="80" value="<?= $email ?>" onchange=setCookieEmail();>
         </div>
