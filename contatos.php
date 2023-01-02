@@ -15,7 +15,7 @@
       $sql = "SELECT MAX(codigo) AS 'max_codigo' FROM enderecos";
       $result = mysqli_query($connection, $sql);
       if (!$result) {
-	      $die = "A consulta SQL falhou: ".mysqli_error($connection);
+        $die = "A consulta SQL falhou: ".mysqli_error($connection);
       } else {
         $rows = mysqli_fetch_array($result, MYSQLI_ASSOC);
         if (empty($rows['max_codigo'])) {
